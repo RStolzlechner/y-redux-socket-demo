@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
-import { State, Store } from "@ngrx/store";
-import { MyState } from "../ng-rx-store/state";
-import { actions } from "../ng-rx-store/actions";
-import { selectors } from "../ng-rx-store/selectors";
+import { Store } from "@ngrx/store";
 import { CommonModule } from "@angular/common";
+import { testActions } from "../ng-rx-store/test/test.actions";
+import { testSelectors } from "../ng-rx-store/test/test.selectors";
+import { TestState } from "../ng-rx-store/test/test.state";
+import { RootState } from "../ng-rx-store/state";
 
 @Component({
     selector: 'app-test',
@@ -18,11 +19,11 @@ import { CommonModule } from "@angular/common";
     standalone: true
 })
 export class TestComponent {
-    protected serverResponse$ = this.store.select(selectors.selectServerResponse);
+    protected serverResponse$ = this.store.select(testSelectors.selectServerResponse);
 
-    constructor(private store: Store<MyState>) {}
+    constructor(private store: Store<RootState>) {}
 
     protected buttonClicked() {
-        this.store.dispatch(actions.testCallServer());
+        this.store.dispatch(testActions.testCallServer());
     }
 }
