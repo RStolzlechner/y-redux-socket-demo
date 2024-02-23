@@ -3,7 +3,11 @@
     "editor.formatOnType": false, // required
     "editor.formatOnPaste": false, // optional
     "editor.formatOnSave": true, // optional
+    "editor.tabSize": 4,
     "editor.formatOnSaveMode": "file", // required to format on save
     "files.autoSave": "onFocusChange", // optional but recommended
-    "vs-code-prettier-eslint.prettierLast": false // set as "true" to run 'prettier' last not first
+    "vs-code-prettier-eslint.prettierLast": false,
+    "[csharp]": {
+      "editor.defaultFormatter": "ms-dotnettools.csharp"
+    } // set as "true" to run 'prettier' last not first
   }
