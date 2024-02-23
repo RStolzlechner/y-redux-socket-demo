@@ -1,3 +1,4 @@
+using FluentMigrator.Runner;
 using Infrastructure;
 using Service;
 
@@ -13,6 +14,19 @@ builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 
 builder.Services.AddControllers();
+
+// Add FluentMigrator
+builder.Services.AddFluentMigratorCore()
+    .ConfigureRunner(rb => rb
+        .AddPostgres()
+        .WithGlobalConnectionString($@"
+            User ID = i_am_dev_user;
+            Password = myshinynewpassword;
+            Host = localhost;
+            Port = 5327;
+            Database = dev_db;")
+        .ScanIn(typeof(Program).Assembly).For.Migrations()
+    );
 
 //CORS
 builder.Services.AddCors(options =>
@@ -40,16 +54,11 @@ app.UseHttpsRedirection();
 //CORS
 app.UseCors();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
 app.MapControllers().WithOpenApi();
 
-app.Run();
+//Migrate the database
+var scope = app.Services.CreateScope();
+var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
+migrator?.MigrateUp();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+app.Run();
