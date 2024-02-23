@@ -11,11 +11,13 @@ import {
   provideEffects,
 } from "@ngrx/effects";
 import { TestEffects } from "./ng-rx-store/test/test.effects";
+import { HttpClientModule, provideHttpClient } from "@angular/common/http";
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore(rootReducer),
     provideEffects([TestEffects]),
+    provideHttpClient(),
   ],
 };

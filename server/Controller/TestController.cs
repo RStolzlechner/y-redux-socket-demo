@@ -11,6 +11,6 @@ public class TestController : ControllerBase
     [HttpGet]
     public IActionResult Ping()
     {
-        return Ok("Pong");
+        return Ok(new {message = "Pong"});
     }
 }
