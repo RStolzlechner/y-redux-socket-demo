@@ -1,9 +1,12 @@
+using Infrastructure;
+
 namespace Service;
 
-public class TestService : ITestService
+public class TestService(ITestRepository testRepository) : ITestService
 {
     public string Ping()
     {
-        return "Pong from Service!";
+        var result = testRepository.Ping();
+        return result;
     }
 }
