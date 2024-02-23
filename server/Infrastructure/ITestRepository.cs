@@ -1,6 +1,6 @@
-namespace Infrastructure;
+namespace server.Infrastructure;
 
 public interface ITestRepository
 {
-    string Ping();
+    Task<string> Ping();
 }

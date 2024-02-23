@@ -1,5 +1,7 @@
 using FluentMigrator.Runner;
-using Infrastructure;
+using server;
+using server.Infrastructure;
+using server.Service;
 using Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,12 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddFluentMigratorCore()
     .ConfigureRunner(rb => rb
         .AddPostgres()
-        .WithGlobalConnectionString($@"
-            User ID = i_am_dev_user;
-            Password = myshinynewpassword;
-            Host = localhost;
-            Port = 5327;
-            Database = dev_db;")
+        .WithGlobalConnectionString(Constants.ConnectionString)
         .ScanIn(typeof(Program).Assembly).For.Migrations()
     );
 

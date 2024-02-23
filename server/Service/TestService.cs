@@ -1,10 +1,11 @@
-using Infrastructure;
+using server.Infrastructure;
+using server.Service;
 
 namespace Service;
 
 public class TestService(ITestRepository testRepository) : ITestService
 {
-    public string Ping()
+    public Task<string> Ping()
     {
         var result = testRepository.Ping();
         return result;

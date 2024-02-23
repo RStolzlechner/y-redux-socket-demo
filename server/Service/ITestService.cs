@@ -1,6 +1,6 @@
-namespace Service;
+namespace server.Service;
 
 public interface ITestService
 {
-    string Ping();
+    Task<string> Ping();
 }

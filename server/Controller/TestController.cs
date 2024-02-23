@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Service;
+using server.Service;
 
-namespace Controller;
+namespace server.Controller;
 
 [AllowAnonymous]
 [ApiController]
@@ -10,9 +10,9 @@ namespace Controller;
 public class TestController(ITestService testService) : ControllerBase
 {
     [HttpGet]
-    public IActionResult Ping()
+    public async Task<IActionResult> Ping()
     {
-        var message = testService.Ping();
+        var message = await testService.Ping();
 
         return Ok(new {message});
     }

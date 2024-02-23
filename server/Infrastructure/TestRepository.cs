@@ -1,9 +1,16 @@
-namespace Infrastructure;
+using Dapper;
+using Npgsql;
+
+namespace server.Infrastructure;
 
 public class TestRepository : ITestRepository
 {
-    public string Ping()
+    public async Task<string> Ping()
     {
-        return "Pong from Infra!";
+        await using var connection = new NpgsqlConnection(Constants.ConnectionString);
+
+        var sql = "SELECT \"Test\" from public.\"Test\" where \"Id\" = 1;";
+
+        return await connection.QuerySingleAsync<string>(sql);
     }
 }
