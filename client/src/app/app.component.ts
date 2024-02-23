@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { TestComponent } from './ui-components/test.component';
+import { Component } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { TestComponent } from "./ui-components/test.component";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
   imports: [RouterOutlet, TestComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  templateUrl: "./app.component.html",
+  styleUrl: "./app.component.scss",
 })
 export class AppComponent {
-  title = 'client';
+  title = "client";
 }

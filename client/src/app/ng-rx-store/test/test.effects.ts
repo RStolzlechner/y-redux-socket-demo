@@ -18,15 +18,13 @@ export class TestEffects {
     this.actions$.pipe(
       ofType(testActions.testCallServer),
       concatMap(() =>
-        this.testHttpService
-          .ping()
-          .pipe(
-            map((result) =>
-              testActions.testCallServerSuccess({
-                serverResponse: result.message,
-              }),
-            ),
+        this.testHttpService.ping().pipe(
+          map((result) =>
+            testActions.testCallServerSuccess({
+              serverResponse: result.message,
+            }),
           ),
+        ),
       ),
     ),
   );
