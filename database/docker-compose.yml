@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  y-redux-socket-demo-database:
+    image: postgres:15
+    container_name: y-redux-socket-demo-database
+    command:
+      - "postgres"
+      - "-c"
+      - "TimeZone=Europe/Vienna"
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5327:5432"
+    environment:
+      POSTGRES_USER: "i_am_dev_user"
+      POSTGRES_DB: "dev_db"
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+      POSTGRES_PASSWORD: "myshinynewpassword"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ~/y-redux-socket-demo-database/data:/var/lib/postgresql/data
