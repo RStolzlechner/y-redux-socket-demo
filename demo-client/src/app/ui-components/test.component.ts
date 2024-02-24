@@ -11,19 +11,19 @@ import { RootState } from "../ng-rx-store/state";
     imports: [CommonModule],
     template: `
         <div>
-            <h3>Test</h3>
-            <button (click)="buttonClicked()">Click me</button>
-            <div>Resp: {{ serverResponse$ | async }}</div>
+            <h3>HTTP Request - Response</h3>
+            <button (click)="httpRequestResponseClicked()">click me</button>
+            <div>Resp: {{ httpRequestResponse$ | async }}</div>
         </div>
     `,
     standalone: true
 })
 export class TestComponent {
-    protected serverResponse$ = this.store.select(testSelectors.selectServerResponse);
+    protected httpRequestResponse$ = this.store.select(testSelectors.selectHttpRequestResponse);
 
     constructor(private store: Store<RootState>) {}
 
-    protected buttonClicked() {
-        this.store.dispatch(testActions.testCallServer());
+    protected httpRequestResponseClicked() {
+        this.store.dispatch(testActions.httpRequestResponse());
     }
 }

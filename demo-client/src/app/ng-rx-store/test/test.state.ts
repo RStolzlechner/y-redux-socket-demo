@@ -1,7 +1,7 @@
 export interface TestState {
-    serverResponse: string;
+    httpRequestResponse: string;
 }
 
 export const initialTestState: TestState = {
-    serverResponse: 'No server response yet'
+  httpRequestResponse: 'No request made yet.'
 };

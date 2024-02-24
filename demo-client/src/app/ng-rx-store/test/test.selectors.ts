@@ -3,10 +3,10 @@ import { RootState } from "../state";
 
 const selectTestState = (state: RootState) => state.test;
 
-const selectServerResponse = createSelector(selectTestState, (state) => {
-  return state.serverResponse;
+const selectHttpRequestResponse = createSelector(selectTestState, (state) => {
+  return state.httpRequestResponse;
 });
 
 export const testSelectors = {
-  selectServerResponse,
+  selectHttpRequestResponse,
 };

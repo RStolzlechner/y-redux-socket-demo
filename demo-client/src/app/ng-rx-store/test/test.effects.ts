@@ -16,13 +16,15 @@ export class TestEffects {
 
   testCallServer$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(testActions.testCallServer),
+      ofType(testActions.httpRequestResponse),
       concatMap(() =>
         this.testHttpService.ping().pipe(
-          map((result) =>
-            testActions.testCallServerSuccess({
-              serverResponse: result.message,
-            }),
+          map((result) => {
+              console.log('result', result);
+              return testActions.httpRequestResponseSuccess({
+                serverResponse: result.message,
+              });
+            }
           ),
         ),
       ),

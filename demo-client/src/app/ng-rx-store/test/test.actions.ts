@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 
-const testCallServer = createAction('Test call server');
-const testCallServerSuccess = createAction('Test call server success', props<{ serverResponse: string }>());
+const httpRequestResponse = createAction('Test call server');
+const httpRequestResponseSuccess = createAction('Test call server success', props<{ serverResponse: string }>());
 
 export const testActions = {
-    testCallServer,
-    testCallServerSuccess
+    httpRequestResponse,
+    httpRequestResponseSuccess
 }
