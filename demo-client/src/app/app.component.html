@@ -1,1 +1,10 @@
-<app-test></app-test>
+<div class="flex mb-5 cursor-pointer">
+  <div class="mr-4" [ngClass]="{'font-medium underline': testSelected()}" (click)="selectTest()">Test Component</div>
+  <div class="mr-4" [ngClass]="{'font-medium underline': yReduxSelected()}" (click)="selectYRedux()">YRedux Socket Demo</div>
+  <div class="mr-4" [ngClass]="{'font-medium underline': traditionalSelected()}" (click)="selectTraditional()">Traditional Approach Demo</div>
+</div>
+<div>
+  <app-test *ngIf="testSelected()"></app-test>
+  <app-y-redux-socket-demo *ngIf="yReduxSelected()"></app-y-redux-socket-demo>
+  <app-traditional-approach-demo *ngIf="traditionalSelected()"></app-traditional-approach-demo>
+</div>

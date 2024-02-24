@@ -12,6 +12,9 @@ import { of } from 'rxjs';
   imports: [CommonModule],
   template: `
     <div>
+      Test component to test the tec stack. Can be removed when finished
+    </div>
+    <div>
       <h3>HTTP Request - Response</h3>
       <button (click)="httpRequestResponseClicked()">click me</button>
       <div>Resp: {{ httpRequestResponse$ | async }}</div>
