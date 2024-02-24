@@ -1,7 +1,7 @@
 using Dapper;
 using Npgsql;
 
-namespace server.Infrastructure;
+namespace DemoServer.Infrastructure;
 
 public class TestRepository : ITestRepository
 {
@@ -9,7 +9,7 @@ public class TestRepository : ITestRepository
     {
         await using var connection = new NpgsqlConnection(Constants.ConnectionString);
 
-        var sql = "SELECT \"Test\" from public.\"Test\" where \"Id\" = 1;";
+        var sql = "select a_string from demo_table where id = 1;";
 
         return await connection.QuerySingleAsync<string>(sql);
     }

@@ -1,4 +1,4 @@
-namespace server.Infrastructure;
+namespace DemoServer.Infrastructure;
 
 public interface ITestRepository
 {

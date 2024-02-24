@@ -1,8 +1,8 @@
+using DemoServer.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using server.Service;
 
-namespace server.Controller;
+namespace DemoServer.Controller;
 
 [AllowAnonymous]
 [ApiController]

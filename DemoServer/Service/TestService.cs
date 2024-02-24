@@ -1,5 +1,5 @@
-using server.Infrastructure;
-using server.Service;
+using DemoServer.Infrastructure;
+using DemoServer.Service;
 
 namespace Service;
 

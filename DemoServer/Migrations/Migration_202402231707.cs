@@ -7,13 +7,13 @@ public class Migration_202402231707 : Migration
 {
     public override void Up()
     {
-        Create.Table("Test")
-            .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-            .WithColumn("Test").AsString();
+        Create.Table("demo_table")
+            .WithColumn("id").AsInt64().PrimaryKey().Identity()
+            .WithColumn("a_string").AsString();
     }
 
     public override void Down()
     {
-        Delete.Table("Test");
+        Delete.Table("demo_table");
     }
 }

@@ -1,4 +1,4 @@
-namespace server.Service;
+namespace DemoServer.Service;
 
 public interface ITestService
 {

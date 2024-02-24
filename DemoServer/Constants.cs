@@ -1,4 +1,4 @@
-namespace server;
+namespace DemoServer;
 
 public static class Constants
 {
