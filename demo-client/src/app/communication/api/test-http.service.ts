@@ -13,4 +13,8 @@ export class TestHttpService {
     const url = this.urlService.getServerHttpUrl('test');
     return this.httpClient.get<{ message: string }>(url);
   }
+  signalRResponse() {
+    const url = this.urlService.getServerHttpUrl('test/signal-r-response');
+    return this.httpClient.get<void>(url);
+  }
 }

@@ -31,8 +31,12 @@ export class TestComponent {
   protected httpRequestResponse$ = this.store.select(
     testSelectors.selectHttpRequestResponse,
   );
-  protected httpRequestSignalRResponse$ = of('Http SignalR Not implemented');
-  protected signalRRequestResponse$ = of('SignalR Not implemented');
+  protected httpRequestSignalRResponse$ = this.store.select(
+    testSelectors.selectHttpRequestSignalRResponse,
+  );
+  protected signalRRequestResponse$ = this.store.select(
+    testSelectors.selectSignalRRequestResponse,
+  );
 
   constructor(private store: Store<RootState>) {}
 
@@ -41,14 +45,10 @@ export class TestComponent {
   }
 
   protected httpRequestSignalRResponseClicked() {
-    this.httpRequestSignalRResponse$ = of(
-      'Http SignalR Not implemented. But clicked worked',
-    );
+    this.store.dispatch(testActions.httpRequestSignalRResponse());
   }
 
   protected SignalRRequestResponseClicked() {
-    this.signalRRequestResponse$ = of(
-      'SignalR Not implemented. But clicked worked',
-    );
+    this.store.dispatch(testActions.signalRRequestResponse());
   }
 }
