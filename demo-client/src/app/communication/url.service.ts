@@ -1,12 +1,17 @@
-import { Inject } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-@Inject({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class UrlService {
-  private httpUrl = "http://localhost:5151/api/";
+  private httpUrl = 'http://localhost:5151/api';
+  private hubUrl = 'http://localhost:5151/test-hub';
 
   getServerHttpUrl(method: string) {
     if (!method) return this.httpUrl;
 
     return `${this.httpUrl}/${method}`;
+  }
+
+  getHubUrl() {
+    return this.hubUrl;
   }
 }

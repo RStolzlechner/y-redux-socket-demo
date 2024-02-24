@@ -1,12 +1,16 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { UrlService } from '../url.service';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class TestHttpService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private urlService: UrlService,
+  ) {}
 
   ping() {
-    const url = "http://localhost:5151/api/Test";
+    const url = this.urlService.getServerHttpUrl('test');
     return this.httpClient.get<{ message: string }>(url);
   }
 }

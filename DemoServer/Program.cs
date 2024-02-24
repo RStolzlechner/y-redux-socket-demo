@@ -1,5 +1,6 @@
 using FluentMigrator.Runner;
 using DemoServer;
+using DemoServer.Hub;
 using DemoServer.Infrastructure;
 using DemoServer.Service;
 using Service;
@@ -16,6 +17,14 @@ builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 
 builder.Services.AddControllers();
+
+builder.Services.AddSignalR(options =>
+{
+    options.KeepAliveInterval = TimeSpan.FromSeconds(10);
+    options.EnableDetailedErrors = true;
+    options.ClientTimeoutInterval = TimeSpan.FromSeconds(120);
+    options.MaximumReceiveMessageSize = 512 * 1024; //512 kB
+});
 
 // Add FluentMigrator
 builder.Services.AddFluentMigratorCore()
@@ -52,6 +61,8 @@ app.UseHttpsRedirection();
 app.UseCors();
 
 app.MapControllers().WithOpenApi();
+app.UseWebSockets();
+app.MapHub<TestHub>("test-hub");
 
 //Migrate the database
 var scope = app.Services.CreateScope();
