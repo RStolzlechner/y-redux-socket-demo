@@ -63,6 +63,7 @@ app.UseCors();
 app.MapControllers().WithOpenApi();
 app.UseWebSockets();
 app.MapHub<TestHub>("test-hub");
+app.MapHub<YReduxSocketHub>("y-redux-socket-hub");
 
 //Migrate the database
 var scope = app.Services.CreateScope();
