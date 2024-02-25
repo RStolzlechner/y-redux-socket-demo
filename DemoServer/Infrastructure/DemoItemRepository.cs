@@ -5,7 +5,7 @@ using Npgsql;
 
 namespace DemoServer.Infrastructure;
 
-public class DemoTableRepository : IDemoTableRepository
+public class DemoItemRepository : IDemoItemRepository
 {
     public async Task<IEnumerable<DemoItem>> GetAllAsync()
     {

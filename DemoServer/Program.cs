@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IDemoTableRepository, DemoTableRepository>();
+builder.Services.AddScoped<IDemoItemRepository, DemoItemRepository>();
 
 builder.Services.AddScoped<IDemoItemService, DemoItemService>();
 

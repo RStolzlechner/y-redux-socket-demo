@@ -2,7 +2,7 @@ using DemoServer.Models;
 
 namespace DemoServer.Infrastructure;
 
-public interface IDemoTableRepository
+public interface IDemoItemRepository
 {
     Task<IEnumerable<DemoItem>> GetAllAsync();
     Task<DemoItem?> GetByIdAsync(long id);

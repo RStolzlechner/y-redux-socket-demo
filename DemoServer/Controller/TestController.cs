@@ -14,9 +14,9 @@ public class TestController(IDemoItemService demoItemService, IHubContext<TestHu
     [HttpGet]
     public async Task<IActionResult> Ping()
     {
-        var message = await demoItemService.Ping();
+        var item = await demoItemService.GetByIdAsync(1);
 
-        return Ok(new {message});
+        return Ok(new { message = item?.Name ?? "No item" });
     }
 
     [HttpGet]
