@@ -1,10 +1,21 @@
-<div class="flex mb-5 cursor-pointer">
-  <div class="mr-4" [ngClass]="{'font-medium underline': testSelected()}" (click)="selectTest()">Test Component</div>
-  <div class="mr-4" [ngClass]="{'font-medium underline': yReduxSelected()}" (click)="selectYRedux()">YRedux Socket Demo</div>
-  <div class="mr-4" [ngClass]="{'font-medium underline': traditionalSelected()}" (click)="selectTraditional()">Traditional Approach Demo</div>
+<div class="page-container">
+  <div class="content">
+    <h3>YReduxSocket: Demoprojekt</h3>
+    <div>Inhalt hier</div>
+  </div>
+
+  <div class="footer-background text-sm p-3">
+    <div class="flex justify-content-center flex-wrap pt-1 pb-2">
+      <div class="pr-4">YReduxSocket: Ein Werkzeug zur Synchronisation und Konsistenz in Webanwendungen</div>
+      <div>Abschlussarbeit am LG Kooperative Systeme der FernUniversität in Hagen.</div>
+    </div>
+    <div class="flex justify-content-center pb-1">
+      <div class="pr-4">Informatik Bachelor of Science</div>
+      <div class="pr-4">Ricardo Stolzlechner 9463470</div>
+      <div>Betreuerin: Dr. Lihong Ma</div>
+    </div>
+  </div>
 </div>
-<div>
-  <app-test *ngIf="testSelected()"></app-test>
-  <app-y-redux-socket-demo *ngIf="yReduxSelected()"></app-y-redux-socket-demo>
-  <app-traditional-approach-demo *ngIf="traditionalSelected()"></app-traditional-approach-demo>
-</div>
+
+
+

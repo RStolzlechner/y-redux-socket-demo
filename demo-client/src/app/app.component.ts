@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TestComponent } from './ui-components/test.component';
 import { TestHub } from './communication/signal-r/test.hub';
 import { CommonModule } from '@angular/common';
-import { YReduxSocketDemoComponent } from './ui-components/y-redux-socket-demo.component';
-import { TraditionalApproachDemoComponent } from './ui-components/traditional-approach-demo.component';
+import { DemoItemDetailComponent } from './ui-components/demo-item-detail.component';
+import { DemoItemListComponent } from './ui-components/demo-item-list.component';
+import { DemoItemOverviewComponent } from './ui-components/demo-item-overview.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
-    TestComponent,
     CommonModule,
-    YReduxSocketDemoComponent,
-    TraditionalApproachDemoComponent,
+    DemoItemDetailComponent,
+    DemoItemListComponent,
+    DemoItemOverviewComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
