@@ -1,6 +1,6 @@
 namespace DemoServer.Service;
 
-public interface ITestService
+public interface IDemoItemService
 {
     Task<string> Ping();
 }

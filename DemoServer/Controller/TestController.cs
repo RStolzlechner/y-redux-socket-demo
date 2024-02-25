@@ -9,12 +9,12 @@ namespace DemoServer.Controller;
 [AllowAnonymous]
 [ApiController]
 [Route("api/[controller]")]
-public class TestController(ITestService testService, IHubContext<TestHub, ITestHub> hubContext) : ControllerBase
+public class TestController(IDemoItemService demoItemService, IHubContext<TestHub, ITestHub> hubContext) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> Ping()
     {
-        var message = await testService.Ping();
+        var message = await demoItemService.Ping();
 
         return Ok(new {message});
     }

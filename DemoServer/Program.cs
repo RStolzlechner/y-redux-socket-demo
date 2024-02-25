@@ -3,7 +3,6 @@ using DemoServer;
 using DemoServer.Hub;
 using DemoServer.Infrastructure;
 using DemoServer.Service;
-using Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ITestRepository, TestRepository>();
+builder.Services.AddScoped<IDemoTableRepository, DemoTableRepository>();
 
-builder.Services.AddScoped<ITestService, TestService>();
+builder.Services.AddScoped<IDemoItemService, DemoItemService>();
 
 builder.Services.AddControllers();
 
