@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { DemoItemDetailComponent } from './ui-components/demo-item-detail.component';
 import { DemoItemListComponent } from './ui-components/demo-item-list.component';
 import { DemoItemOverviewComponent } from './ui-components/demo-item-overview.component';
+import { DemoItemFacade } from './ng-rx-store/demo-item/demo-item.facade';
 
 @Component({
   selector: 'app-root',
@@ -20,20 +21,13 @@ import { DemoItemOverviewComponent } from './ui-components/demo-item-overview.co
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  private selection = 1;
-  protected testSelected = () => this.selection === 0;
-  protected yReduxSelected = () => this.selection === 1;
-  protected traditionalSelected = () => this.selection === 2;
-
-  title = 'client';
-
-  constructor(private testHub: TestHub) {}
+  constructor(
+    private testHub: TestHub,
+    private readonly demoItemService: DemoItemFacade,
+  ) {}
 
   async ngOnInit() {
     await this.testHub.createHub();
+    await this.demoItemService.load();
   }
-
-  protected selectTest = () => (this.selection = 0);
-  protected selectYRedux = () => (this.selection = 1);
-  protected selectTraditional = () => (this.selection = 2);
 }

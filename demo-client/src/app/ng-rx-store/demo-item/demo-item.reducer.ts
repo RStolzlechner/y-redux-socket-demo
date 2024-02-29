@@ -4,6 +4,12 @@ import { demoItemActions } from './demo-item.actions';
 
 export const demoItemReducer = createReducer(
   initialDemoItemState,
+  on(demoItemActions.load, (state): DemoItemState => {
+    return { ...state, entities: {}, loaded: false, loading: true };
+  }),
+  on(demoItemActions.loadFail, (state): DemoItemState => {
+    return { ...state, entities: {}, loaded: false, loading: false };
+  }),
   on(demoItemActions.loadSuccess, (state, { items }): DemoItemState => {
     const entities = items.reduce(
       (acc, item) => ({
@@ -12,7 +18,7 @@ export const demoItemReducer = createReducer(
       }),
       {},
     );
-    return { ...state, loaded: true, entities };
+    return { ...state, loaded: true, loading: false, entities };
   }),
   on(
     demoItemActions.createOrUpdateSuccess,

@@ -4,6 +4,14 @@ import { DemoItem } from '../../models/demo-item';
 
 const selectDemoItemState = (state: RootState) => state.demoItem;
 
+const selectDemoItemLoadState = createSelector(
+  selectDemoItemState,
+  (state) => ({
+    loaded: state.loaded,
+    loading: state.loading,
+  }),
+);
+
 const selectDemoItems = createSelector(
   selectDemoItemState,
   (state): DemoItem[] => {
@@ -16,7 +24,13 @@ const selectDemoItemById = (id: number) =>
     return state.entities[id];
   });
 
+const selectDemoItemCount = createSelector(selectDemoItems, (items) => ({
+  count: items.length,
+}));
+
 export const demoItemSelectors = {
   selectDemoItems,
+  selectDemoItemLoadState,
   selectDemoItemById,
+  selectDemoItemCount,
 };

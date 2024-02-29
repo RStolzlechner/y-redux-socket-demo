@@ -7,12 +7,17 @@ import { map, tap } from 'rxjs';
 export class DemoItemEffects {
   constructor(private actions$: Actions) {}
 
-  yReduxSocketConnect = createEffect(() =>
+  load$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(demoItemActions.yReduxSocketConnect),
+      ofType(demoItemActions.load),
       map(() => {
-        //todo call hub to connect and get data
-        return demoItemActions.loadSuccess({ items: [] });
+        console.log('I am loading');
+        return demoItemActions.loadSuccess({
+          items: [
+            { name: 'TestItem1', description: 'TestDescription1', id: 1 },
+            { name: 'TestItem2', description: 'TestDescription2', id: 2 },
+          ],
+        });
       }),
     ),
   );
