@@ -6,6 +6,7 @@ import { DemoItemDetailComponent } from './ui-components/demo-item-detail.compon
 import { DemoItemListComponent } from './ui-components/demo-item-list.component';
 import { DemoItemOverviewComponent } from './ui-components/demo-item-overview.component';
 import { DemoItemFacade } from './ng-rx-store/demo-item/demo-item.facade';
+import { DemoItemAddComponent } from './ui-components/demo-item-add.component';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { DemoItemFacade } from './ng-rx-store/demo-item/demo-item.facade';
     DemoItemDetailComponent,
     DemoItemListComponent,
     DemoItemOverviewComponent,
+    DemoItemAddComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

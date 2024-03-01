@@ -43,20 +43,51 @@ th {
 }
 
 //button
-button {
-  background-color: #5e87d9;
-  border: none;
-  color: white;
-  padding: 5px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+.add-button, .save-button, .cancel-button {
+  background-color: #4c51af; /* Green background */
+  color: white; /* White text */
+  padding: 8px 16px; /* Padding */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-right: 8px; /* Margin right */
+  border-radius: 4px; /* Rounded corners */
 }
-button:hover {
-  background-color: #346ace;
+
+.save-button:disabled {
+  background-color: #cccccc; /* Gray background for disabled */
+  color: #666666; /* Dark gray text for disabled */
+  cursor: not-allowed; /* Not allowed cursor for disabled */
+}
+
+.cancel-button {
+  background-color: #f44336; /* Red background for cancel */
+}
+
+.input-field {
+  width: 100%; /* Full width */
+  padding: 8px; /* Padding */
+  margin: 5px 0; /* Margin top and bottom */
+  display: inline-block; /* For inline layout */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Box sizing */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+}
+
+.col-label {
+  text-align: right;
+  padding-right: 10px; /* Align labels to right and add some padding */
+}
+
+.col-input {
+  text-align: left;
+}
+
+.mb-2 {
+  margin-bottom: 16px; /* Margin bottom for spacing */
 }

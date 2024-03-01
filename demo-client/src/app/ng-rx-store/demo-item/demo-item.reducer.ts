@@ -20,13 +20,10 @@ export const demoItemReducer = createReducer(
     );
     return { ...state, loaded: true, loading: false, entities };
   }),
-  on(
-    demoItemActions.createOrUpdateSuccess,
-    (state, { item }): DemoItemState => {
-      const entities = { ...state.entities, [item.id]: item };
-      return { ...state, entities };
-    },
-  ),
+  on(demoItemActions.createSuccess, (state, action): DemoItemState => {
+    const entities = { ...state.entities, [action.id]: action };
+    return { ...state, entities };
+  }),
   on(demoItemActions.removeSuccess, (state, { id }): DemoItemState => {
     const entities = { ...state.entities };
     delete entities[id];

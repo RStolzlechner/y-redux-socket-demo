@@ -22,18 +22,17 @@ export class DemoItemEffects {
     ),
   );
 
-  createUpdateOrDelete$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(
-          demoItemActions.create,
-          demoItemActions.update,
-          demoItemActions.remove,
-        ),
-        tap((action) => {
-          //todo call y-redux-socket endpoint to trigger update
-        }),
-      ),
-    { dispatch: false },
+  create$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(demoItemActions.create),
+      tap((action) => {
+        //todo call y-redux-socket endpoint to trigger update
+      }),
+      map(({ name, description }) => {
+        //get random id
+        const id = Math.floor(Math.random() * 100);
+        return demoItemActions.createSuccess({ id, name, description });
+      }),
+    ),
   );
 }

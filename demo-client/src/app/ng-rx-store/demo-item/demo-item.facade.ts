@@ -22,6 +22,9 @@ export class DemoItemFacade {
     this.store.dispatch(demoItemActions.load());
   };
 
+  public create = (item: DemoItem): void =>
+    this.store.dispatch(demoItemActions.create(item));
+
   public count$ = (): Observable<{ count: number }> =>
     this.store.select(demoItemSelectors.selectDemoItemCount);
 

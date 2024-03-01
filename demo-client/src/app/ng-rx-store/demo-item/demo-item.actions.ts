@@ -9,6 +9,11 @@ const loadSuccess = createAction(
 const loadFail = createAction('[demo-item] load-fail');
 
 const create = createAction('[demo-item] create', props<DemoItem>());
+const createSuccess = createAction(
+  '[demo-item] create success',
+  props<DemoItem>(),
+);
+
 const update = createAction('[demo-item] update', props<DemoItem>());
 const remove = createAction('[demo-item] remove', props<{ id: number }>());
 
@@ -25,7 +30,10 @@ export const demoItemActions = {
   load,
   loadFail,
   loadSuccess,
+
   create,
+  createSuccess,
+
   update,
   remove,
   createOrUpdateSuccess,
