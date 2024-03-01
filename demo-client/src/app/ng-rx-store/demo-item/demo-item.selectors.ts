@@ -32,10 +32,17 @@ const selectSelectedId = createSelector(selectDemoItemState, (state) => ({
   id: state.selectedId,
 }));
 
+const selectedItem = createSelector(selectDemoItemState, (state) => {
+  const id = state.selectedId;
+  if (!id) return undefined;
+  return state.entities[id];
+});
+
 export const demoItemSelectors = {
   selectDemoItems,
   selectDemoItemLoadState,
   selectDemoItemById,
   selectDemoItemCount,
   selectSelectedId,
+  selectedItem,
 };

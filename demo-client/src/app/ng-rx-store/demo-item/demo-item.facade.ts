@@ -39,4 +39,7 @@ export class DemoItemFacade {
 
   public selectedId$ = (): Observable<{ id: number }> =>
     this.store.select(demoItemSelectors.selectSelectedId);
+
+  public selectedItem = (): Observable<DemoItem | undefined> =>
+    this.store.select(demoItemSelectors.selectedItem);
 }
