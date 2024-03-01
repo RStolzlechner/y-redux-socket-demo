@@ -5,6 +5,7 @@ import { demoItemSelectors } from './demo-item.selectors';
 import { RootState } from '../state';
 import { firstValueFrom, Observable, of, tap } from 'rxjs';
 import { demoItemActions } from './demo-item.actions';
+import { DemoItem } from '../../models/demo-item';
 
 @Injectable({
   providedIn: 'root',
@@ -23,4 +24,7 @@ export class DemoItemFacade {
 
   public count$ = (): Observable<{ count: number }> =>
     this.store.select(demoItemSelectors.selectDemoItemCount);
+
+  public items$ = (): Observable<DemoItem[]> =>
+    this.store.select(demoItemSelectors.selectDemoItems);
 }
