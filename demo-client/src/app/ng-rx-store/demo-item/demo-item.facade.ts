@@ -25,6 +25,9 @@ export class DemoItemFacade {
   public create = (item: DemoItem): void =>
     this.store.dispatch(demoItemActions.create(item));
 
+  public remove = (id: number): void =>
+    this.store.dispatch(demoItemActions.remove({ id }));
+
   public count$ = (): Observable<{ count: number }> =>
     this.store.select(demoItemSelectors.selectDemoItemCount);
 

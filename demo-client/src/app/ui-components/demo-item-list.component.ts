@@ -14,12 +14,19 @@ import { AsyncPipe } from '@angular/common';
         <th>ID</th>
         <th>Name</th>
         <th>Beschreibung</th>
+        <th>Aktionen</th>
       </tr>
       @for (item of items; track item.id) {
         <tr>
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.description }}</td>
+          <td>
+            <div class="cursor-pointer tooltip" (click)="deleteItem(item.id)">
+              &#10006;
+              <div class="tooltiptext">Löschen</div>
+            </div>
+          </td>
         </tr>
       }
     </table>
@@ -32,4 +39,8 @@ export class DemoItemListComponent implements OnInit {
   constructor(private readonly demoItemService: DemoItemFacade) {}
 
   async ngOnInit() {}
+
+  protected deleteItem(id: number) {
+    this.demoItemService.remove(id);
+  }
 }

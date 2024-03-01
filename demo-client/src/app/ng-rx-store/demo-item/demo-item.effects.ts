@@ -35,4 +35,11 @@ export class DemoItemEffects {
       }),
     ),
   );
+
+  remove$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(demoItemActions.remove),
+      map(({ id }) => demoItemActions.removeSuccess({ id })),
+    ),
+  );
 }

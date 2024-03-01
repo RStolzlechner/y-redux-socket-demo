@@ -14,16 +14,17 @@ const createSuccess = createAction(
   props<DemoItem>(),
 );
 
-const update = createAction('[demo-item] update', props<DemoItem>());
 const remove = createAction('[demo-item] remove', props<{ id: number }>());
+const removeSuccess = createAction(
+  '[demo-item] remove-success',
+  props<{ id: number }>(),
+);
+
+const update = createAction('[demo-item] update', props<DemoItem>());
 
 const createOrUpdateSuccess = createAction(
   '[demo-item] create-or-update-success',
   props<{ item: DemoItem }>(),
-);
-const removeSuccess = createAction(
-  '[demo-item] remove-success',
-  props<{ id: number }>(),
 );
 
 export const demoItemActions = {
