@@ -27,6 +27,8 @@ const createOrUpdateSuccess = createAction(
   props<{ item: DemoItem }>(),
 );
 
+const select = createAction('[demo-item] select', props<{ id: number }>());
+
 export const demoItemActions = {
   load,
   loadFail,
@@ -35,8 +37,11 @@ export const demoItemActions = {
   create,
   createSuccess,
 
-  update,
   remove,
-  createOrUpdateSuccess,
   removeSuccess,
+
+  update,
+  createOrUpdateSuccess,
+
+  select,
 };

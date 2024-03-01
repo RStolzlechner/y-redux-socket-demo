@@ -29,4 +29,7 @@ export const demoItemReducer = createReducer(
     delete entities[id];
     return { ...state, entities };
   }),
+  on(demoItemActions.select, (state, { id }): DemoItemState => {
+    return { ...state, selectedId: id };
+  }),
 );

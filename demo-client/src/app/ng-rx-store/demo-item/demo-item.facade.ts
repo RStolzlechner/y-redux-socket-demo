@@ -28,9 +28,15 @@ export class DemoItemFacade {
   public remove = (id: number): void =>
     this.store.dispatch(demoItemActions.remove({ id }));
 
+  public select = (id: number): void =>
+    this.store.dispatch(demoItemActions.select({ id }));
+
   public count$ = (): Observable<{ count: number }> =>
     this.store.select(demoItemSelectors.selectDemoItemCount);
 
   public items$ = (): Observable<DemoItem[]> =>
     this.store.select(demoItemSelectors.selectDemoItems);
+
+  public selectedId$ = (): Observable<{ id: number }> =>
+    this.store.select(demoItemSelectors.selectSelectedId);
 }

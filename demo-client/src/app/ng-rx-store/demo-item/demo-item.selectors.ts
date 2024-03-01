@@ -28,9 +28,14 @@ const selectDemoItemCount = createSelector(selectDemoItems, (items) => ({
   count: items.length,
 }));
 
+const selectSelectedId = createSelector(selectDemoItemState, (state) => ({
+  id: state.selectedId,
+}));
+
 export const demoItemSelectors = {
   selectDemoItems,
   selectDemoItemLoadState,
   selectDemoItemById,
   selectDemoItemCount,
+  selectSelectedId,
 };
