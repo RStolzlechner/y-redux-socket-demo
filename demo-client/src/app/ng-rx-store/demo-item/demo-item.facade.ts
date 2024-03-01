@@ -25,6 +25,9 @@ export class DemoItemFacade {
   public create = (item: DemoItem): void =>
     this.store.dispatch(demoItemActions.create(item));
 
+  public update = (item: DemoItem): void =>
+    this.store.dispatch(demoItemActions.update(item));
+
   public remove = (id: number): void =>
     this.store.dispatch(demoItemActions.remove({ id }));
 
@@ -39,4 +42,7 @@ export class DemoItemFacade {
 
   public selectedId$ = (): Observable<{ id: number }> =>
     this.store.select(demoItemSelectors.selectSelectedId);
+
+  public selectedItem$ = (): Observable<DemoItem | undefined> =>
+    this.store.select(demoItemSelectors.selectedItem);
 }

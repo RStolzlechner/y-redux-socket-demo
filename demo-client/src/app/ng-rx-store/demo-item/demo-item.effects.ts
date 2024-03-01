@@ -36,6 +36,19 @@ export class DemoItemEffects {
     ),
   );
 
+  update$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(demoItemActions.update),
+      tap((action) => {
+        //todo call y-redux-socket endpoint to trigger update
+      }),
+      map((action) => {
+        //get random id
+        return demoItemActions.updateSuccess(action);
+      }),
+    ),
+  );
+
   remove$ = createEffect(() =>
     this.actions$.pipe(
       ofType(demoItemActions.remove),

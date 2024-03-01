@@ -21,10 +21,9 @@ const removeSuccess = createAction(
 );
 
 const update = createAction('[demo-item] update', props<DemoItem>());
-
-const createOrUpdateSuccess = createAction(
-  '[demo-item] create-or-update-success',
-  props<{ item: DemoItem }>(),
+const updateSuccess = createAction(
+  '[demo-item] update-success',
+  props<DemoItem>(),
 );
 
 const select = createAction('[demo-item] select', props<{ id: number }>());
@@ -41,7 +40,7 @@ export const demoItemActions = {
   removeSuccess,
 
   update,
-  createOrUpdateSuccess,
+  updateSuccess,
 
   select,
 };
