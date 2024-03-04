@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TestHub } from './communication/signal-r/test.hub';
 import { CommonModule } from '@angular/common';
 import { DemoItemDetailComponent } from './ui-components/demo-item-detail.component';
 import { DemoItemListComponent } from './ui-components/demo-item-list.component';
@@ -8,6 +7,7 @@ import { DemoItemOverviewComponent } from './ui-components/demo-item-overview.co
 import { DemoItemFacade } from './ng-rx-store/demo-item/demo-item.facade';
 import { DemoItemAddComponent } from './ui-components/demo-item-add.component';
 import { map } from 'rxjs';
+import { DemoItemHub } from './communication/signal-r/demo-item.hub';
 
 @Component({
   selector: 'app-root',
@@ -29,12 +29,12 @@ export class AppComponent implements OnInit {
     .pipe(map((item) => !!item));
 
   constructor(
-    private testHub: TestHub,
+    private demoItemHub: DemoItemHub,
     private readonly demoItemService: DemoItemFacade,
   ) {}
 
   async ngOnInit() {
-    await this.testHub.createHub();
+    await this.demoItemHub.createHub();
     await this.demoItemService.load();
   }
 }

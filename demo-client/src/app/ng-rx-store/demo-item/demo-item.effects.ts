@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { demoItemActions } from './demo-item.actions';
-import { map, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
+import { DemoItemHub } from '../../communication/signal-r/demo-item.hub';
 
 @Injectable({ providedIn: 'root' })
 export class DemoItemEffects {
-  constructor(private actions$: Actions) {}
+  constructor(
+    private actions$: Actions,
+    private readonly demoItemHub: DemoItemHub,
+  ) {}
 
   load$ = createEffect(() =>
     this.actions$.pipe(
       ofType(demoItemActions.load),
-      map(() => {
-        console.log('I am loading');
+      switchMap(async () => {
+        const items = await this.demoItemHub.loadDemoItems();
         return demoItemActions.loadSuccess({
-          items: [
-            { name: 'TestItem1', description: 'TestDescription1', id: 1 },
-            { name: 'TestItem2', description: 'TestDescription2', id: 2 },
-          ],
+          items,
         });
       }),
     ),
