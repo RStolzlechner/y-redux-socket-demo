@@ -2,6 +2,12 @@ import { createReducer, on } from '@ngrx/store';
 import { DemoItemState, initialDemoItemState } from './demo-item.state';
 import { demoItemActions } from './demo-item.actions';
 
+/*
+  Reducer for the demo item state. It handles the state changes for the demo item feature.
+  It is a pure function that takes the current state and an action and returns the new state.
+  The state is immutable, so the reducer creates a new state object with the updated properties.
+  The reducer is used by the NgRx Store to update the state based on dispatched actions.
+ */
 export const demoItemReducer = createReducer(
   initialDemoItemState,
   on(demoItemActions.load, (state): DemoItemState => {

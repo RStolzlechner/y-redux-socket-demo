@@ -13,7 +13,7 @@ public class DemoItemHub(IDemoItemRepository demoItemRepository) : Hub<IDemoItem
     /// <returns>An enumerable collection of DemoItem objects.</returns>
     public async Task<IEnumerable<DemoItem>> LoadDemoItems()
     {
-        await Groups.AddToGroupAsync(Context.ConnectionId, $"socket-group-{SocketGroup.DemoItem}");
+        await Groups.AddToGroupAsync(Context.ConnectionId, SocketGroup.DemoItem.GetSocketGroupName());
         var items = await demoItemRepository.GetAllAsync();
         
         return items;
