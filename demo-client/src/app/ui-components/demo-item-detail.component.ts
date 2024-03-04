@@ -8,14 +8,12 @@ import { DemoItem } from '../models/demo-item';
   selector: 'app-demo-item-detail',
   standalone: true,
   template: `@if (selectedItem$ | async; as selectedItem) {
-      <app-demo-item-form
-        [initialItem]="selectedItem"
-        (saveItem)="saveItem($event)"
-        (cancelSave)="cancelSave()"
-      ></app-demo-item-form>
-    } @else {
-      <div>Keine Auswahl getroffen.</div>
-    }`,
+    <app-demo-item-form
+      [initialItem]="selectedItem"
+      (saveItem)="saveItem($event)"
+      (cancelSave)="cancelSave()"
+    ></app-demo-item-form>
+  }`,
   imports: [AsyncPipe, DemoItemFormComponent],
 })
 export class DemoItemDetailComponent implements OnInit {

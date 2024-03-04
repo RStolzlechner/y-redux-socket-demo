@@ -8,8 +8,11 @@
         <app-demo-item-list></app-demo-item-list>
       </div>
       <div class="ml-4">
-        <app-demo-item-add></app-demo-item-add>
-        <app-demo-item-detail class="ml-2"></app-demo-item-detail>
+        @if(itemSelected$ | async) {
+          <app-demo-item-detail></app-demo-item-detail>
+        } @else {
+          <app-demo-item-add></app-demo-item-add>
+        }
       </div>
     </div>
   </div>

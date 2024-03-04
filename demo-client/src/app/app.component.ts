@@ -7,6 +7,7 @@ import { DemoItemListComponent } from './ui-components/demo-item-list.component'
 import { DemoItemOverviewComponent } from './ui-components/demo-item-overview.component';
 import { DemoItemFacade } from './ng-rx-store/demo-item/demo-item.facade';
 import { DemoItemAddComponent } from './ui-components/demo-item-add.component';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,10 @@ import { DemoItemAddComponent } from './ui-components/demo-item-add.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
+  protected itemSelected$ = this.demoItemService
+    .selectedItem$()
+    .pipe(map((item) => !!item));
+
   constructor(
     private testHub: TestHub,
     private readonly demoItemService: DemoItemFacade,
