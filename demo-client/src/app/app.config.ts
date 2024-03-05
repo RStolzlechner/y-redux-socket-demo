@@ -8,6 +8,10 @@ import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
 import { DemoItemEffects } from './ng-rx-store/demo-item/demo-item.effects';
 
+/**
+ * The configuration for the application.
+ * It provides the router, the store and the effects.
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),

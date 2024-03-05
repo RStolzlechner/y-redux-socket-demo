@@ -9,6 +9,9 @@ import { DemoItemAddComponent } from './ui-components/demo-item-add.component';
 import { map } from 'rxjs';
 import { DemoItemHub } from './communication/signal-r/demo-item.hub';
 
+/**
+ * The main component of the application.
+ */
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -28,11 +31,20 @@ export class AppComponent implements OnInit {
     .selectedItem$()
     .pipe(map((item) => !!item));
 
+  /**
+   * Constructor
+   * @param demoItemHub The hub for the demo item
+   * @param demoItemService The service for the demo item
+   */
   constructor(
     private demoItemHub: DemoItemHub,
     private readonly demoItemService: DemoItemFacade,
   ) {}
 
+  /**
+   * Initialize the component
+   * create the web socket hub and load the demo items
+   */
   async ngOnInit() {
     await this.demoItemHub.createHub();
     await this.demoItemService.load();

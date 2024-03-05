@@ -5,8 +5,10 @@ using Npgsql;
 
 namespace DemoServer.Infrastructure;
 
+/// <inheritdoc cref="IDemoItemRepository"/>
 public class DemoItemRepository : IDemoItemRepository
 {
+    /// <inheritdoc cref="IDemoItemRepository"/>
     public async Task<IEnumerable<DemoItem>> GetAllAsync()
     {
         await using var connection = new NpgsqlConnection(Constants.ConnectionString);
@@ -14,7 +16,8 @@ public class DemoItemRepository : IDemoItemRepository
         var sql = "select * from demo_item;";
         return await connection.QueryAsync<DemoItem>(sql);
     }
-
+    
+    /// <inheritdoc cref="IDemoItemRepository"/>
     public async Task<DemoItem?> GetByIdAsync(long id)
     {
         await using var connection = new NpgsqlConnection(Constants.ConnectionString);
@@ -22,7 +25,8 @@ public class DemoItemRepository : IDemoItemRepository
         var sql = "select * from demo_item where id = @id;";
         return await connection.QuerySingleOrDefaultAsync<DemoItem>(sql, new { id });
     }
-
+    
+    /// <inheritdoc cref="IDemoItemRepository"/>
     public async Task<long> CreateAsync(DemoItem item)
     {
         await using var connection = new NpgsqlConnection(Constants.ConnectionString);
@@ -31,6 +35,7 @@ public class DemoItemRepository : IDemoItemRepository
         return await connection.ExecuteScalarAsync<long>(sql, item);
     }
 
+    /// <inheritdoc cref="IDemoItemRepository"/>
     public async Task UpdateAsync(DemoItem item)
     {
         await using var connection = new NpgsqlConnection(Constants.ConnectionString);
@@ -39,6 +44,7 @@ public class DemoItemRepository : IDemoItemRepository
         await connection.ExecuteAsync(sql, item);
     }
 
+    /// <inheritdoc cref="IDemoItemRepository"/>
     public async Task DeleteAsync(long id)
     {
         await using var connection = new NpgsqlConnection(Constants.ConnectionString);

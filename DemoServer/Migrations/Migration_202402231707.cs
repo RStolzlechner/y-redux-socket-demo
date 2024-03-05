@@ -2,6 +2,11 @@ using FluentMigrator;
 
 namespace Migrations;
 
+/// <summary>
+/// Represents a migration to create a demonstration table.
+/// Implements the <see cref="Migration"/> class.
+/// </summary>
+/// <seealso cref="Migration" />
 [Migration(202402231707, "Create demonstration table")]
 public class Migration_202402231707 : Migration
 {

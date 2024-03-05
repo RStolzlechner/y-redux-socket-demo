@@ -1,5 +1,8 @@
 import { DemoItem } from '../../models/demo-item';
 
+/**
+ * The state of the demo item store.
+ */
 export interface DemoItemState {
   loading: boolean;
   loaded: boolean;
@@ -7,6 +10,9 @@ export interface DemoItemState {
   selectedId: number;
 }
 
+/**
+ * The initial state of the demo item store.
+ */
 export const initialDemoItemState: DemoItemState = {
   loading: false,
   loaded: false,

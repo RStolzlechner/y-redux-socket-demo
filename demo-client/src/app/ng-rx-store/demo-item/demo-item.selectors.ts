@@ -38,6 +38,9 @@ const selectedItem = createSelector(selectDemoItemState, (state) => {
   return state.entities[id];
 });
 
+/**
+ * The selectors for the demo item store.
+ */
 export const demoItemSelectors = {
   selectDemoItems,
   selectDemoItemLoadState,

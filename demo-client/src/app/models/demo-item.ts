@@ -1,3 +1,6 @@
+/**
+ * Interface for the DemoItem model
+ */
 export interface DemoItem {
   id: number;
   name: string;

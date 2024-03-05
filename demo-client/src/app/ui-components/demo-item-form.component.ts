@@ -8,6 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 
+/**
+ * The component to edit the data of a demo item.
+ * It provides a form to enter the data and buttons to save or cancel the editing.
+ */
 @Component({
   selector: 'app-demo-item-form',
   standalone: true,
@@ -43,17 +47,33 @@ import {
   imports: [FormsModule, ReactiveFormsModule],
 })
 export class DemoItemFormComponent implements OnInit {
+  /**
+   * The initial item to edit.
+   */
   @Input() initialItem: DemoItem = { id: 0, name: '', description: '' };
 
+  /**
+   * The event to save the item.
+   */
   @Output() saveItem: EventEmitter<DemoItem> = new EventEmitter<DemoItem>();
+  /**
+   * The event to cancel the save.
+   */
   @Output() cancelSave: EventEmitter<void> = new EventEmitter<void>();
 
+  /**
+   * The form to edit the item.
+   */
   protected itemForm = new FormGroup({
     id: new FormControl(0),
     name: new FormControl('', Validators.required),
     description: new FormControl(''),
   });
 
+  /**
+   * Initialize the component
+   * set the initial values of the form
+   */
   ngOnInit(): void {
     this.itemForm.setValue({
       id: this.initialItem.id,
@@ -62,6 +82,9 @@ export class DemoItemFormComponent implements OnInit {
     });
   }
 
+  /**
+   * Submit the form and save the item.
+   */
   protected onSubmit() {
     const demoItem: DemoItem = {
       id: this.itemForm.value.id ?? 0,
@@ -72,10 +95,17 @@ export class DemoItemFormComponent implements OnInit {
     this.itemForm.reset();
   }
 
+  /**
+   * Reset the form and cancel the save.
+   */
   protected onReset() {
     this.cancelSave.emit();
   }
 
+  /**
+   * Check if the save button should be disabled.
+   * @returns True if the save button should be disabled
+   */
   protected saveDisabled() {
     if (!this.itemForm.valid) return true;
 

@@ -28,6 +28,9 @@ const updateSuccess = createAction(
 
 const select = createAction('[demo-item] select', props<{ id: number }>());
 
+/**
+ * The actions for the demo item store.
+ */
 export const demoItemActions = {
   load,
   loadFail,

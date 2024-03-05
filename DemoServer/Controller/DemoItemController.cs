@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace DemoServer.Controller;
 
+/// <summary>
+/// Controller class for managing demo items through API endpoints.
+/// </summary>
 [AllowAnonymous]
 [ApiController]
 [Route("api/demo-item")]
@@ -15,6 +18,11 @@ public class DemoItemController(
     IDemoItemService demoItemService, 
     IHubContext<DemoItemHub, IDemoItemHub> hubContext): ControllerBase
 {
+    /// <summary>
+    /// Creates a new DemoItem.
+    /// </summary>
+    /// <param name="demoItem">The DemoItem object representing the new item to be created.</param>
+    /// <returns>An IActionResult representing the result of the operation.</returns>
     [HttpPost]
     public async Task<IActionResult> CreateDemoItem([FromBody] DemoItem demoItem)
     {
@@ -28,7 +36,12 @@ public class DemoItemController(
         
         return Ok();
     }
-    
+
+    /// <summary>
+    /// Updates a DemoItem object.
+    /// </summary>
+    /// <param name="demoItem">The DemoItem object to be updated.</param>
+    /// <returns>An IActionResult representing the result of the update operation.</returns>
     [HttpPut]
     public async Task<IActionResult> UpdateDemoItem([FromBody] DemoItem demoItem)
     {
@@ -44,7 +57,12 @@ public class DemoItemController(
         
         return Ok();
     }
-    
+
+    /// <summary>
+    /// Deletes a demo item by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the demo item to delete.</param>
+    /// <returns>An IActionResult representing the result of the delete operation.</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteDemoItem(long id)
     {

@@ -40,6 +40,9 @@ export class DemoItemEffects {
     ),
   );
 
+  /**
+   * Effect to create a new demo item.
+   */
   create$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -51,6 +54,9 @@ export class DemoItemEffects {
     { dispatch: false },
   );
 
+  /**
+   * Effect to update a demo item.
+   */
   update$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -62,6 +68,9 @@ export class DemoItemEffects {
     { dispatch: false },
   );
 
+  /**
+   * Effect to remove a demo item.
+   */
   remove$ = createEffect(
     () =>
       this.actions$.pipe(

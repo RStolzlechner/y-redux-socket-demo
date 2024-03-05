@@ -1,9 +1,13 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { DemoItemFacade } from '../ng-rx-store/demo-item/demo-item.facade';
 import { AsyncPipe } from '@angular/common';
 import { DemoItemFormComponent } from './demo-item-form.component';
 import { DemoItem } from '../models/demo-item';
 
+/**
+ * The component to edit the data of a demo item.
+ * It provides a form to enter the data and buttons to save or cancel the editing.
+ */
 @Component({
   selector: 'app-demo-item-detail',
   standalone: true,
@@ -16,18 +20,27 @@ import { DemoItem } from '../models/demo-item';
   }`,
   imports: [AsyncPipe, DemoItemFormComponent],
 })
-export class DemoItemDetailComponent implements OnInit {
+export class DemoItemDetailComponent {
   protected selectedItem$ = this.demoItemService.selectedItem$();
 
+  /**
+   * Constructor
+   * @param demoItemService The service for the demo item
+   */
   constructor(private readonly demoItemService: DemoItemFacade) {}
 
-  async ngOnInit() {}
-
-  saveItem(demoItem: DemoItem) {
+  /**
+   * Save the edited demo item.
+   * @param demoItem The edited demo item
+   */
+  protected saveItem(demoItem: DemoItem) {
     this.demoItemService.update(demoItem);
     this.demoItemService.select(0);
   }
 
+  /**
+   * Cancel the editing of the demo item.
+   */
   cancelSave() {
     this.demoItemService.select(0);
   }
