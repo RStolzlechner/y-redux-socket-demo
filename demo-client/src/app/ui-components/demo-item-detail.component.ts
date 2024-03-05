@@ -11,9 +11,9 @@ import { DemoItem } from '../models/demo-item';
 @Component({
   selector: 'app-demo-item-detail',
   standalone: true,
-  template: `@if (selectedItem$ | async; as selectedItem) {
+  template: `@if (selectedItem$ | async) {
     <app-demo-item-form
-      [initialItem]="selectedItem"
+      [initialItem$]="selectedItem$"
       (saveItem)="saveItem($event)"
       (cancelSave)="cancelSave()"
     ></app-demo-item-form>

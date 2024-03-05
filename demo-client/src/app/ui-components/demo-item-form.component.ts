@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Observable, of } from 'rxjs';
 
 /**
  * The component to edit the data of a demo item.
@@ -50,7 +51,13 @@ export class DemoItemFormComponent implements OnInit {
   /**
    * The initial item to edit.
    */
-  @Input() initialItem: DemoItem = { id: 0, name: '', description: '' };
+  @Input() initialItem$: Observable<DemoItem | undefined> = of({
+    id: 0,
+    name: '',
+    description: '',
+  });
+  private initialName: string = '';
+  private initialDescription: string = '';
 
   /**
    * The event to save the item.
@@ -74,11 +81,15 @@ export class DemoItemFormComponent implements OnInit {
    * Initialize the component
    * set the initial values of the form
    */
-  ngOnInit(): void {
-    this.itemForm.setValue({
-      id: this.initialItem.id,
-      name: this.initialItem.name,
-      description: this.initialItem.description,
+  ngOnInit() {
+    this.initialItem$.subscribe((initialItem) => {
+      this.itemForm.setValue({
+        id: initialItem?.id ?? 0,
+        name: initialItem?.name ?? '',
+        description: initialItem?.description ?? '',
+      });
+      this.initialName = initialItem?.name ?? '';
+      this.initialDescription = initialItem?.description ?? '';
     });
   }
 
@@ -110,8 +121,8 @@ export class DemoItemFormComponent implements OnInit {
     if (!this.itemForm.valid) return true;
 
     return (
-      this.itemForm.value.name === this.initialItem.name &&
-      this.itemForm.value.description === this.initialItem.description
+      this.itemForm.value.name === this.initialName &&
+      this.itemForm.value.description === this.initialDescription
     );
   }
 }
