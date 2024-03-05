@@ -35,6 +35,12 @@ export class DemoItemHub {
     this.connection.on('DemoItemCreated', (item: DemoItem) => {
       this.store.dispatch(demoItemActions.createSuccess(item));
     });
+    this.connection.on('DemoItemUpdated', (item: DemoItem) => {
+      this.store.dispatch(demoItemActions.updateSuccess(item));
+    });
+    this.connection.on('DemoItemDeleted', (id: number) => {
+      this.store.dispatch(demoItemActions.removeSuccess({ id }));
+    });
   }
 
   public async loadDemoItems() {

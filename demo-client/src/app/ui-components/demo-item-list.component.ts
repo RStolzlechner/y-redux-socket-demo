@@ -30,7 +30,10 @@ import { AsyncPipe } from '@angular/common';
             <td>{{ item.name }}</td>
             <td>{{ item.description }}</td>
             <td>
-              <div class="cursor-pointer tooltip" (click)="deleteItem(item.id)">
+              <div
+                class="cursor-pointer tooltip"
+                (click)="deleteItem($event, item.id)"
+              >
                 &#10006;
                 <div class="tooltiptext">Löschen</div>
               </div>
@@ -50,11 +53,12 @@ export class DemoItemListComponent implements OnInit {
 
   async ngOnInit() {}
 
-  protected deleteItem(id: number) {
-    this.demoItemService.remove(id);
-  }
-
   protected selectItem(id: number) {
     this.demoItemService.select(id);
+  }
+
+  protected deleteItem($event: MouseEvent, id: number) {
+    $event.stopPropagation();
+    this.demoItemService.remove(id);
   }
 }

@@ -51,23 +51,25 @@ export class DemoItemEffects {
     { dispatch: false },
   );
 
-  update$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(demoItemActions.update),
-      tap((action) => {
-        //todo call y-redux-socket endpoint to trigger update
-      }),
-      map((action) => {
-        //get random id
-        return demoItemActions.updateSuccess(action);
-      }),
-    ),
+  update$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(demoItemActions.update),
+        tap((action) => {
+          return this.demoItemApi.updateDemoItem(action).subscribe();
+        }),
+      ),
+    { dispatch: false },
   );
 
-  remove$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(demoItemActions.remove),
-      map(({ id }) => demoItemActions.removeSuccess({ id })),
-    ),
+  remove$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(demoItemActions.remove),
+        tap(({ id }) => {
+          return this.demoItemApi.deleteDemoItem(id).subscribe();
+        }),
+      ),
+    { dispatch: false },
   );
 }
