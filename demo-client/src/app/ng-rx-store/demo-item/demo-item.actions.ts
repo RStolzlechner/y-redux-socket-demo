@@ -10,7 +10,7 @@ const loadFail = createAction('[demo-item] load-fail');
 
 const create = createAction('[demo-item] create', props<DemoItem>());
 const createSuccess = createAction(
-  '[demo-item] create success',
+  '[demo-item] create-success',
   props<DemoItem>(),
 );
 
