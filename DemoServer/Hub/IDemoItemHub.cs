@@ -1,4 +1,5 @@
 using DemoServer.Models;
+using DemoServer.Models.Actions;
 
 namespace DemoServer.Hub;
 
@@ -8,23 +9,9 @@ namespace DemoServer.Hub;
 public interface IDemoItemHub
 {
     /// <summary>
-    /// Notifies the client that a new demo item has been created.
+    /// Used to Notify the clients that an action has been successfully executed
     /// </summary>
-    /// <param name="demoItem">The demo item which was created</param>
+    /// <param name="action">the success action</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
-    Task DemoItemCreated(DemoItem demoItem);
-
-    /// <summary>
-    /// Notifies the client that a demo item has been updated.
-    /// </summary>
-    /// <param name="demoItem">The demo item that has been updated</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    Task DemoItemUpdated(DemoItem demoItem);
-
-    /// <summary>
-    /// Notifies the client that a demo item has been deleted.
-    /// </summary>
-    /// <param name="id">The ID of the deleted demo item</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    Task DemoItemDeleted(long id);
+    Task DispatchSuccess(BaseAction action);
 }
