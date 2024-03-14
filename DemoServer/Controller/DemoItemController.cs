@@ -1,6 +1,7 @@
 using DemoServer.Enums;
 using DemoServer.Hub;
 using DemoServer.Models;
+using DemoServer.Models.Actions;
 using DemoServer.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,20 +20,42 @@ public class DemoItemController(
     IHubContext<DemoItemHub, IDemoItemHub> hubContext): ControllerBase
 {
     /// <summary>
+    /// client can call this method to command the server to execute an action
+    /// </summary>
+    /// <param name="action">the action to be executed</param>
+    /// <returns>An IActionResult representing the result of the operation.</returns>
+    [HttpPut("dispatch")]
+    public Task<IActionResult> DispatchAction([FromBody] BaseAction action)
+    {
+        switch (action)
+        {
+            case CreateAction createAction:
+                return  CreateDemoItem(createAction);
+            case UpdateAction updateAction:
+                return UpdateDemoItem(updateAction);
+            case RemoveAction removeAction:
+                return RemoveDemoItem(removeAction);
+            default:
+                return Task.FromResult<IActionResult>(BadRequest("Unknown action type"));
+        }
+    }
+    
+    /// <summary>
     /// Creates a new DemoItem.
     /// </summary>
-    /// <param name="demoItem">The DemoItem object representing the new item to be created.</param>
+    /// <param name="createAction">The action with the necessary information.</param>
     /// <returns>An IActionResult representing the result of the operation.</returns>
-    [HttpPost]
-    public async Task<IActionResult> CreateDemoItem([FromBody] DemoItem demoItem)
+    private async Task<IActionResult> CreateDemoItem(CreateAction createAction)
     {
-        if(string.IsNullOrEmpty(demoItem.Name))
-            return BadRequest("Name is required");
+        var item = new DemoItem(0, createAction.Name, createAction.Description);        
         
-        var id = await demoItemService.CreateAsync(demoItem);
-        var createdItem = demoItem with { Id = id };
+        if(!item.ValidForCreation)
+            return BadRequest("Invalid create action.");
+        
+        var id = await demoItemService.CreateAsync(item);
 
-        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DemoItemCreated(createdItem);
+        var success = new CreateSuccessAction(item with { Id = id });
+        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DispatchSuccess(success);
         
         return Ok();
     }
@@ -40,20 +63,23 @@ public class DemoItemController(
     /// <summary>
     /// Updates a DemoItem object.
     /// </summary>
-    /// <param name="demoItem">The DemoItem object to be updated.</param>
+    /// <param name="updateAction">The action with the necessary information.</param>
     /// <returns>An IActionResult representing the result of the update operation.</returns>
-    [HttpPut]
-    public async Task<IActionResult> UpdateDemoItem([FromBody] DemoItem demoItem)
+    private async Task<IActionResult> UpdateDemoItem(UpdateAction updateAction)
     {
-        if(demoItem.Id == 0)
-            return BadRequest("Id is required");
+        var demoItem = new DemoItem(updateAction.Id, updateAction.Name, updateAction.Description);
+        
+        if(!demoItem.ValidForUpdate)
+            return BadRequest("Invalid update action.");
+        
         var existingItem = await demoItemService.GetByIdAsync(demoItem.Id);
         if(existingItem == null)
             return NotFound();
         
         await demoItemService.UpdateAsync(demoItem);
 
-        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DemoItemUpdated(demoItem);
+        var success = new UpdateSuccessAction(demoItem);
+        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DispatchSuccess(success);
         
         return Ok();
     }
@@ -61,18 +87,19 @@ public class DemoItemController(
     /// <summary>
     /// Deletes a demo item by its ID.
     /// </summary>
-    /// <param name="id">The ID of the demo item to delete.</param>
+    /// <param name="removeAction">The action with the necessary information.</param>
     /// <returns>An IActionResult representing the result of the delete operation.</returns>
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteDemoItem(long id)
+    private async Task<IActionResult> RemoveDemoItem(RemoveAction removeAction)
     {
+        var id = removeAction.Id;
         var existingItem = await demoItemService.GetByIdAsync(id);
         if(existingItem == null)
             return NotFound();
         
         await demoItemService.DeleteAsync(id);
 
-        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DemoItemDeleted(id);
+        var success = new RemoveSuccessAction(id);
+        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DispatchSuccess(success);
         
         return Ok();
     }

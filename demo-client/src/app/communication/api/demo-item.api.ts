@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UrlService } from '../url.service';
 import { HttpClient } from '@angular/common/http';
-import { DemoItem } from '../../models/demo-item';
+import { TypedAction } from '@ngrx/store/src/models';
 
 /**
  * The api to communicate with the server for the demo item feature.
@@ -19,36 +19,11 @@ export class DemoItemApi {
   ) {}
 
   /**
-   * create a demo items
-   * @param demoItem The demo item to create
-   * @returns The observable to subscribe to
+   * send an action to the server to command an execution
+   * @param action typed action to send
    */
-  public createDemoItem(demoItem: DemoItem) {
-    return this.httpClient.post<void>(
-      this.urlService.getServerHttpUrl('demo-item'),
-      demoItem,
-    );
-  }
-
-  /**
-   * Update a demo item
-   * @param demoItem The demo item to update
-   * @returns The observable to subscribe to
-   */
-  public updateDemoItem(demoItem: DemoItem) {
-    return this.httpClient.put<DemoItem>(
-      this.urlService.getServerHttpUrl('demo-item'),
-      demoItem,
-    );
-  }
-
-  /**
-   * Delete a demo item
-   * @param id The id of the demo item to delete
-   */
-  public deleteDemoItem(id: number) {
-    return this.httpClient.delete<void>(
-      this.urlService.getServerHttpUrl(`demo-item/${id}`),
-    );
+  public dispatchAction(action: TypedAction<any>) {
+    const url = this.urlService.getServerHttpUrl('demo-item/dispatch');
+    return this.httpClient.put(url, action);
   }
 }

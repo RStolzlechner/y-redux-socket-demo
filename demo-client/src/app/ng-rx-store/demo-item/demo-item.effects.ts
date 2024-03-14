@@ -7,8 +7,7 @@ import { DemoItemApi } from '../../communication/api/demo-item.api';
 
 /**
   Effects for the demo item feature. It listens to dispatched actions and triggers side effects.
-  The effects are used to handle async operations, such as loading data from a server, and dispatch new actions.
-  The effects are used by the NgRx Effects to handle side effects based on dispatched actions.
+  The effects are used to handle async operations, such as loading data from a server.
  */
 @Injectable({ providedIn: 'root' })
 export class DemoItemEffects {
@@ -16,12 +15,10 @@ export class DemoItemEffects {
    Constructor to inject the dependencies.
    @param actions$ The NgRx Actions service to listen to dispatched actions.
    @param demoItemHub The demo item hub to communicate with the server using websocket protocol.
-   * @param demoItemApi
    */
   constructor(
     private actions$: Actions,
     private readonly demoItemHub: DemoItemHub,
-    private readonly demoItemApi: DemoItemApi,
   ) {}
 
   /**
@@ -38,47 +35,5 @@ export class DemoItemEffects {
         });
       }),
     ),
-  );
-
-  /**
-   * Effect to create a new demo item.
-   */
-  create$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(demoItemActions.create),
-        tap((action) => {
-          return this.demoItemApi.createDemoItem(action).subscribe();
-        }),
-      ),
-    { dispatch: false },
-  );
-
-  /**
-   * Effect to update a demo item.
-   */
-  update$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(demoItemActions.update),
-        tap((action) => {
-          return this.demoItemApi.updateDemoItem(action).subscribe();
-        }),
-      ),
-    { dispatch: false },
-  );
-
-  /**
-   * Effect to remove a demo item.
-   */
-  remove$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(demoItemActions.remove),
-        tap(({ id }) => {
-          return this.demoItemApi.deleteDemoItem(id).subscribe();
-        }),
-      ),
-    { dispatch: false },
   );
 }

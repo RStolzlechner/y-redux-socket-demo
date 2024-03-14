@@ -8,7 +8,7 @@ import { UrlService } from '../url.service';
 import { DemoItem } from '../../models/demo-item';
 import { Store } from '@ngrx/store';
 import { RootState } from '../../ng-rx-store/state';
-import { demoItemActions } from '../../ng-rx-store/demo-item/demo-item.actions';
+import { TypedAction } from '@ngrx/store/src/models';
 
 /**
  * The hub to communicate with the server for the demo item feature.
@@ -45,14 +45,9 @@ export class DemoItemHub {
 
     await this.connection.start();
 
-    this.connection.on('DemoItemCreated', (item: DemoItem) => {
-      this.store.dispatch(demoItemActions.createSuccess(item));
-    });
-    this.connection.on('DemoItemUpdated', (item: DemoItem) => {
-      this.store.dispatch(demoItemActions.updateSuccess(item));
-    });
-    this.connection.on('DemoItemDeleted', (id: number) => {
-      this.store.dispatch(demoItemActions.removeSuccess({ id }));
+    //listen on DispatchSuccess events and dispatch the received action
+    this.connection.on('DispatchSuccess', (action: TypedAction<any>) => {
+      this.store.dispatch(action);
     });
   }
 

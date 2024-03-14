@@ -1,5 +1,6 @@
 using FluentMigrator.Runner;
 using DemoServer;
+using DemoServer.Helper;
 using DemoServer.Hub;
 using DemoServer.Infrastructure;
 using DemoServer.Service;
@@ -14,7 +15,10 @@ builder.Services.AddScoped<IDemoItemRepository, DemoItemRepository>();
 
 builder.Services.AddScoped<IDemoItemService, DemoItemService>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new BaseActionJsonConverter());
+});
 
 builder.Services.AddSignalR(options =>
 {
