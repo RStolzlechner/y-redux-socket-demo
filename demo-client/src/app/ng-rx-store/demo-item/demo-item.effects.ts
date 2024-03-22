@@ -81,4 +81,19 @@ export class DemoItemEffects {
       ),
     { dispatch: false },
   );
+
+  /**
+   * Effect to duplicate a demo item
+   */
+  duplicate$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(demoItemActions.duplicate),
+        tap(({ id }) => {
+          console.log('duplicate', id);
+          return this.demoItemApi.duplicateDemoItem(id).subscribe();
+        }),
+      ),
+    { dispatch: false },
+  );
 }

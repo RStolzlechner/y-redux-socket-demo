@@ -38,6 +38,23 @@ public class DemoItemController(
     }
 
     /// <summary>
+    /// Duplicate a demo item
+    /// </summary>
+    /// <param name="model">model which is holding the id</param>
+    /// <returns>the duplicated model</returns>
+    [HttpPost("duplicate")]
+    public async Task<IActionResult> DuplicateDemoItem([FromBody] IdModel model)
+    {
+        var existingItem = await demoItemService.DuplicateAsync(model.Id);
+        if(existingItem == null)
+            return NotFound();
+        
+        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DemoItemCreated(existingItem);
+        
+        return Ok();
+    }
+
+    /// <summary>
     /// Updates a DemoItem object.
     /// </summary>
     /// <param name="demoItem">The DemoItem object to be updated.</param>
