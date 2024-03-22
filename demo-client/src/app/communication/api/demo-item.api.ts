@@ -51,4 +51,15 @@ export class DemoItemApi {
       this.urlService.getServerHttpUrl(`demo-item/${id}`),
     );
   }
+
+  /**
+   * Duplicate a demo item
+   * @param id The id of the demo item to duplicate
+   */
+  public duplicateDemoItem(id: number) {
+    return this.httpClient.post<void>(
+      this.urlService.getServerHttpUrl(`demo-item/duplicate`),
+      { id },
+    );
+  }
 }

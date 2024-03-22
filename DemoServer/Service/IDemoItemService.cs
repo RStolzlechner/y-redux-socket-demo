@@ -43,4 +43,11 @@ public interface IDemoItemService
     /// <param name="id">The ID of the record to delete.</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
     Task DeleteAsync(long id);
+
+    /// <summary>
+    /// Duplicates a demo item based on the given id
+    /// </summary>
+    /// <param name="id">the id of the item which should be duplicated</param>
+    /// <returns>the duplicated item</returns>
+    Task<DemoItem?> DuplicateAsync(long id);
 }

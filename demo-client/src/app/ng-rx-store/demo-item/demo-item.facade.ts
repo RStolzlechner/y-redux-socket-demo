@@ -53,6 +53,13 @@ export class DemoItemFacade {
     this.store.dispatch(demoItemActions.remove({ id }));
 
   /**
+   * duplicate a demo item.
+   * @param id The id of the demo item to duplicate
+   */
+  public duplicate = (id: number): void =>
+    this.store.dispatch(demoItemActions.duplicate({ id }));
+
+  /**
    * Select a demo item.
    * @param id The id of the demo item to select
    */
