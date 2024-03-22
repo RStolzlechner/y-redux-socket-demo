@@ -27,17 +27,13 @@ public class DemoItemController(
     [HttpPut("dispatch")]
     public Task<IActionResult> DispatchAction([FromBody] BaseAction action)
     {
-        switch (action)
+        return action switch
         {
-            case CreateAction createAction:
-                return  CreateDemoItem(createAction);
-            case UpdateAction updateAction:
-                return UpdateDemoItem(updateAction);
-            case RemoveAction removeAction:
-                return RemoveDemoItem(removeAction);
-            default:
-                return Task.FromResult<IActionResult>(BadRequest("Unknown action type"));
-        }
+            CreateAction createAction => CreateDemoItem(createAction),
+            UpdateAction updateAction => UpdateDemoItem(updateAction),
+            RemoveAction removeAction => RemoveDemoItem(removeAction),
+            _ => Task.FromResult<IActionResult>(BadRequest("Unknown action type"))
+        };
     }
     
     /// <summary>
