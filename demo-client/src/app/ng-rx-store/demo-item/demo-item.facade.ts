@@ -60,6 +60,9 @@ export class DemoItemFacade {
     this.apiService.dispatchAction(demoItemActions.remove({ id })).subscribe();
   };
 
+  public duplicate = (id: number): void =>
+    this.store.dispatch(demoItemActions.duplicate({ id }));
+
   /**
    * Select a demo item.
    * @param id The id of the demo item to select

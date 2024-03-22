@@ -26,4 +26,15 @@ public class DemoItemService(IDemoItemRepository demoItemRepository) : IDemoItem
     /// <inheritdoc cref="IDemoItemService"/>
     public Task DeleteAsync(long id) =>
         TransactionHelper.Execute(() => demoItemRepository.DeleteAsync(id));
+
+    /// <inheritdoc cref="IDemoItemService"/>
+    public async Task<DemoItem?> DuplicateAsync(long id)
+    {
+        var existingItem = await demoItemRepository.GetByIdAsync(id);
+        if (existingItem is null) return null;
+
+        var newItem = existingItem with { Id = 0 };
+        var newId  = await TransactionHelper.Execute(() => demoItemRepository.CreateAsync(newItem));
+        return newItem with { Id = newId };
+    }
 }

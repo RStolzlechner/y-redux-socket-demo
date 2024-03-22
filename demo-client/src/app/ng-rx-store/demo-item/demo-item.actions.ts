@@ -26,6 +26,12 @@ const updateSuccess = createAction(
   props<DemoItem>(),
 );
 
+//duplicate action (success action is createSuccess)
+const duplicate = createAction(
+  '[demo-item] duplicate',
+  props<{ id: number }>(),
+);
+
 const select = createAction('[demo-item] select', props<{ id: number }>());
 
 /**
@@ -44,6 +50,8 @@ export const demoItemActions = {
 
   update,
   updateSuccess,
+
+  duplicate,
 
   select,
 };
