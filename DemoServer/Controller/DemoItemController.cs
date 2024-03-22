@@ -27,17 +27,14 @@ public class DemoItemController(
     [HttpPut("dispatch")]
     public Task<IActionResult> DispatchAction([FromBody] BaseAction action)
     {
-        switch (action)
+        return action switch
         {
-            case CreateAction createAction:
-                return  CreateDemoItem(createAction);
-            case UpdateAction updateAction:
-                return UpdateDemoItem(updateAction);
-            case RemoveAction removeAction:
-                return RemoveDemoItem(removeAction);
-            default:
-                return Task.FromResult<IActionResult>(BadRequest("Unknown action type"));
-        }
+            CreateAction createAction => CreateDemoItem(createAction),
+            UpdateAction updateAction => UpdateDemoItem(updateAction),
+            RemoveAction removeAction => RemoveDemoItem(removeAction),
+            DuplicateAction duplicateAction => DuplicateDemoItem(duplicateAction),
+            _ => Task.FromResult<IActionResult>(BadRequest("Unknown action type"))
+        };
     }
     
     /// <summary>
@@ -57,6 +54,20 @@ public class DemoItemController(
         var success = new CreateSuccessAction(item with { Id = id });
         await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DispatchSuccess(success);
         
+        return Ok();
+    }
+    
+    /// <summary>
+    /// Duplicate a  DemoItem.
+    /// </summary>
+    /// <param name="duplicateAction">The action with the necessary information.</param>
+    /// <returns>An IActionResult representing the result of the operation.</returns>
+    private async Task<IActionResult> DuplicateDemoItem(DuplicateAction duplicateAction)
+    {
+        var item = await demoItemService.DuplicateAsync(duplicateAction.Id);
+        if (item is null) return NotFound();
+        
+        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DispatchSuccess(new CreateSuccessAction(item));
         return Ok();
     }
 
