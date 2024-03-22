@@ -8,7 +8,7 @@ public static class ActionTypes
     public const string Create = "[demo-item] create";
     public const string Update = "[demo-item] update";
     public const string Remove = "[demo-item] remove";
-    
+    public const string Duplicate = "[demo-item] duplicate";
     
     public const string CreateSuccess = "[demo-item] create-success";
     public const string UpdateSuccess = "[demo-item] update-success";

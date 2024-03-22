@@ -43,6 +43,14 @@ import { AsyncPipe } from '@angular/common';
                 &#10006;
                 <div class="tooltiptext">Löschen</div>
               </div>
+
+              <div
+                class="cursor-pointer tooltip ml-3"
+                (click)="duplicateItem($event, item.id)"
+              >
+                &#x2398;
+                <div class="tooltiptext">Duplicate</div>
+              </div>
             </td>
           </tr>
         }
@@ -83,5 +91,10 @@ export class DemoItemListComponent {
   protected deleteItem($event: MouseEvent, id: number) {
     $event.stopPropagation();
     this.demoItemService.remove(id);
+  }
+
+  duplicateItem($event: MouseEvent, id: number) {
+    $event.stopPropagation();
+    this.demoItemService.duplicate(id);
   }
 }

@@ -25,6 +25,7 @@ public class BaseActionJsonConverter : JsonConverter<BaseAction>
             ActionTypes.Create => JsonSerializer.Deserialize<CreateAction>(root.GetRawText(), deserializationOptions),
             ActionTypes.Remove => JsonSerializer.Deserialize<RemoveAction>(root.GetRawText(), deserializationOptions),
             ActionTypes.Update => JsonSerializer.Deserialize<UpdateAction>(root.GetRawText(), deserializationOptions),
+            ActionTypes.Duplicate => JsonSerializer.Deserialize<DuplicateAction>(root.GetRawText(), deserializationOptions),
             _ => throw new JsonException("Unknown type"),
         };
     }
