@@ -51,8 +51,8 @@ export class DemoItemAddComponent {
    * Submit the form and create a new demo item.
    * @param demoItem The demo item to create
    */
-  protected onSubmit(demoItem: DemoItem) {
-    this.demoItemService.create(demoItem);
+  protected async onSubmit(demoItem: DemoItem) {
+    await this.demoItemService.create(demoItem);
 
     this.onNew = false;
   }
