@@ -1,3 +1,4 @@
+using System.Data;
 using DemoServer.Enums;
 using DemoServer.Hub;
 using DemoServer.Models;
@@ -17,24 +18,56 @@ namespace DemoServer.Controller;
 [Route("api/demo-item")]
 public class DemoItemController(
     IDemoItemService demoItemService, 
-    IHubContext<DemoItemHub, IDemoItemHub> hubContext): ControllerBase
+    IHubContext<DemoItemHub, IDemoItemHub> hubContext,
+    IActionStore actionStore): ControllerBase
 {
     /// <summary>
     /// client can call this method to command the server to execute an action
     /// </summary>
     /// <param name="action">the action to be executed</param>
+    /// <param name="version">the client version of the action</param>
     /// <returns>An IActionResult representing the result of the operation.</returns>
-    [HttpPut("dispatch")]
-    public Task<IActionResult> DispatchAction([FromBody] BaseAction action)
+    [HttpPut("dispatch/{version:int}")]
+    public async Task<IActionResult> DispatchAction([FromBody] BaseAction action, [FromRoute] int version)
     {
-        return action switch
+        await actionStore.WaitAsync();
+        try
         {
-            CreateAction createAction => CreateDemoItem(createAction),
-            UpdateAction updateAction => UpdateDemoItem(updateAction),
-            RemoveAction removeAction => RemoveDemoItem(removeAction),
-            DuplicateAction duplicateAction => DuplicateDemoItem(duplicateAction),
-            _ => Task.FromResult<IActionResult>(BadRequest("Unknown action type"))
-        };
+            if (version != actionStore.VersionNumber)
+                return Ok(new { Executed = false });
+
+            BaseAction successAction = action switch
+            {
+                CreateAction createAction => await CreateDemoItem(createAction),
+                UpdateAction updateAction => await UpdateDemoItem(updateAction),
+                RemoveAction removeAction => await RemoveDemoItem(removeAction),
+                DuplicateAction duplicateAction => await DuplicateDemoItem(duplicateAction),
+                _ => throw new DataException("Unknown action type")
+            };
+
+            actionStore.Store(successAction);
+            
+            await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).OnNewAction();
+            return Ok(new { Executed = true });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+        finally
+        {
+            actionStore.ReleaseAsync();
+        }
+    }
+
+    /// <summary>
+    /// get a list of actions that have been executed since the specified version
+    /// </summary>
+    [HttpGet("actions-since/{version:int}")]
+    public IActionResult ActionsSince([FromRoute] int version)
+    {
+        var actions = actionStore.ActionsSince(version);
+        return Ok(new { Actions = actions });
     }
     
     /// <summary>
@@ -42,19 +75,16 @@ public class DemoItemController(
     /// </summary>
     /// <param name="createAction">The action with the necessary information.</param>
     /// <returns>An IActionResult representing the result of the operation.</returns>
-    private async Task<IActionResult> CreateDemoItem(CreateAction createAction)
+    private async Task<CreateSuccessAction> CreateDemoItem(CreateAction createAction)
     {
         var item = new DemoItem(0, createAction.Name, createAction.Description);        
         
         if(!item.ValidForCreation)
-            return BadRequest("Invalid create action.");
+            throw new DataException("Invalid create action.");
         
         var id = await demoItemService.CreateAsync(item);
 
-        var success = new CreateSuccessAction(item with { Id = id });
-        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DispatchSuccess(success);
-        
-        return Ok();
+        return new CreateSuccessAction(item with { Id = id });
     }
     
     /// <summary>
@@ -62,13 +92,12 @@ public class DemoItemController(
     /// </summary>
     /// <param name="duplicateAction">The action with the necessary information.</param>
     /// <returns>An IActionResult representing the result of the operation.</returns>
-    private async Task<IActionResult> DuplicateDemoItem(DuplicateAction duplicateAction)
+    private async Task<CreateSuccessAction> DuplicateDemoItem(DuplicateAction duplicateAction)
     {
         var item = await demoItemService.DuplicateAsync(duplicateAction.Id);
-        if (item is null) return NotFound();
-        
-        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DispatchSuccess(new CreateSuccessAction(item));
-        return Ok();
+        if (item is null) throw new DataException("Not found");
+
+        return new CreateSuccessAction(item);
     }
 
     /// <summary>
@@ -76,23 +105,20 @@ public class DemoItemController(
     /// </summary>
     /// <param name="updateAction">The action with the necessary information.</param>
     /// <returns>An IActionResult representing the result of the update operation.</returns>
-    private async Task<IActionResult> UpdateDemoItem(UpdateAction updateAction)
+    private async Task<UpdateSuccessAction> UpdateDemoItem(UpdateAction updateAction)
     {
         var demoItem = new DemoItem(updateAction.Id, updateAction.Name, updateAction.Description);
         
         if(!demoItem.ValidForUpdate)
-            return BadRequest("Invalid update action.");
+            throw new DataException("Invalid update action.");
         
         var existingItem = await demoItemService.GetByIdAsync(demoItem.Id);
         if(existingItem == null)
-            return NotFound();
+            throw new DataException("Not Found.");
         
         await demoItemService.UpdateAsync(demoItem);
 
-        var success = new UpdateSuccessAction(demoItem);
-        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DispatchSuccess(success);
-        
-        return Ok();
+        return new UpdateSuccessAction(demoItem);
     }
 
     /// <summary>
@@ -100,18 +126,15 @@ public class DemoItemController(
     /// </summary>
     /// <param name="removeAction">The action with the necessary information.</param>
     /// <returns>An IActionResult representing the result of the delete operation.</returns>
-    private async Task<IActionResult> RemoveDemoItem(RemoveAction removeAction)
+    private async Task<RemoveSuccessAction> RemoveDemoItem(RemoveAction removeAction)
     {
         var id = removeAction.Id;
         var existingItem = await demoItemService.GetByIdAsync(id);
         if(existingItem == null)
-            return NotFound();
+            throw new DataException("Not Found.");
         
         await demoItemService.DeleteAsync(id);
 
-        var success = new RemoveSuccessAction(id);
-        await hubContext.Clients.Groups(SocketGroup.DemoItem.GetSocketGroupName()).DispatchSuccess(success);
-        
-        return Ok();
+        return new RemoveSuccessAction(id);
     }
 }

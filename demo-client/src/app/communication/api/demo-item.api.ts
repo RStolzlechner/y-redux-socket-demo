@@ -31,10 +31,16 @@ export class DemoItemApi {
     return this.httpClient.put<{ executed: boolean }>(url, action);
   }
 
-  public actionsSince(version: number): Observable<TypedAction<any>[]> {
+  /**
+   * get all actions with a greater version
+   * @param version the actual version
+   */
+  public actionsSince(
+    version: number,
+  ): Observable<{ actions: TypedAction<any>[] }> {
     const url = this.urlService.getServerHttpUrl(
       `demo-item/actions-since/${version}`,
     );
-    return this.httpClient.get<TypedAction<any>[]>(url);
+    return this.httpClient.get<{ actions: TypedAction<any>[] }>(url);
   }
 }

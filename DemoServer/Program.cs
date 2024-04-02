@@ -15,6 +15,8 @@ builder.Services.AddScoped<IDemoItemRepository, DemoItemRepository>();
 
 builder.Services.AddScoped<IDemoItemService, DemoItemService>();
 
+builder.Services.AddSingleton<IActionStore, ActionStore>();
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new BaseActionJsonConverter());

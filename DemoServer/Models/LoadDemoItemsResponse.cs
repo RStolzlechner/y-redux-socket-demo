@@ -1,6 +1,6 @@
 namespace DemoServer.Models;
 
-public class LoadDemoItemsResponse
-{
-    
-}
+/// <summary>
+/// response dto when load demo items is called
+/// </summary>
+public record LoadDemoItemsResponse(IEnumerable<DemoItem> Items, int Version);

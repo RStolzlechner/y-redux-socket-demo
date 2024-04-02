@@ -53,11 +53,12 @@ export class DemoItemHub {
 
     //listen on DispatchSuccess events and dispatch the received action
     this.connection.on('OnNewAction', async () => {
-      const successActions = await firstValueFrom(
+      const result = await firstValueFrom(
         this.apiService.actionsSince(this.version),
       );
-      for (let a of successActions) {
+      for (let a of result.actions) {
         this.store.dispatch(a);
+        this.version++;
       }
     });
   }
@@ -86,7 +87,6 @@ export class DemoItemHub {
           this.apiService.dispatchAction(action, this.version),
         );
         if (result.executed) {
-          this.version++;
           successfullyDispatched.push(action);
         }
       } catch (error) {
