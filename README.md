@@ -20,3 +20,11 @@ This sample demonstrates the implementation of a concept known as Y-Redux-Socket
 7. Install the dependencies `npm install`
 8. Start the client `ng serve`
 9. Open the browser and navigate to `http://localhost:4200`
+
+## Branches
+- `1-traditional-approach` - Contains the traditional approach of client-server communication using WebSockets and client-side state management.
+- `2-y-redux-socket-approach` - Contains the implementation of the Y-Redux-Socket concept.
+- `3-traditional-extension` - Add another feature to the traditional approach.
+- `4-y-redux-socket-extension` - Add another feature to the Y-Redux-Socket approach.
+- `5-haverbeke` - Extend the Y-Redux-Socket approach with the Haverbeke-Algorithm.
+
