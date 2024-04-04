@@ -29,9 +29,9 @@ export class DemoItemEffects {
     this.actions$.pipe(
       ofType(demoItemActions.load),
       switchMap(async () => {
-        const items = await this.demoItemHub.loadDemoItems();
+        const response = await this.demoItemHub.loadDemoItems();
         return demoItemActions.loadSuccess({
-          items,
+          ...response,
         });
       }),
     ),

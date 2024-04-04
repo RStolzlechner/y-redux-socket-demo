@@ -9,9 +9,8 @@ namespace DemoServer.Hub;
 public interface IDemoItemHub
 {
     /// <summary>
-    /// Used to Notify the clients that an action has been successfully executed
+    /// used to notify the clients that a new action(s) is(are) available
     /// </summary>
-    /// <param name="action">the success action</param>
-    /// <returns>A Task representing the asynchronous operation.</returns>
-    Task DispatchSuccess(BaseAction action);
+    /// <returns></returns>
+    Task OnNewAction();
 }

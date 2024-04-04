@@ -33,8 +33,8 @@ export class DemoItemDetailComponent {
    * Save the edited demo item.
    * @param demoItem The edited demo item
    */
-  protected saveItem(demoItem: DemoItem) {
-    this.demoItemService.update(demoItem);
+  protected async saveItem(demoItem: DemoItem) {
+    await this.demoItemService.update(demoItem);
     this.demoItemService.select(0);
   }
 

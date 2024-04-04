@@ -1,10 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import { DemoItem } from '../../models/demo-item';
+import {LoadDemoItemResponse} from "../../models/load-demo-item-response";
 
 const load = createAction('[demo-item] load');
 const loadSuccess = createAction(
   '[demo-item] load-success',
-  props<{ items: DemoItem[] }>(),
+  props<LoadDemoItemResponse>(),
 );
 const loadFail = createAction('[demo-item] load-fail');
 

@@ -6,6 +6,8 @@ import { firstValueFrom, Observable } from 'rxjs';
 import { demoItemActions } from './demo-item.actions';
 import { DemoItem } from '../../models/demo-item';
 import { DemoItemApi } from '../../communication/api/demo-item.api';
+import { TypedAction } from '@ngrx/store/src/models';
+import { DemoItemHub } from '../../communication/signal-r/demo-item.hub';
 
 /**
  * The facade for the demo item feature. It provides methods to dispatch actions and select data from the store.
@@ -18,10 +20,12 @@ export class DemoItemFacade {
    * Constructor to inject the dependencies.
    * @param store The Redux store to dispatch actions and select data from the store.
    * @param apiService The demo item API service to communicate with the server.
+   * @param demoItemHub
    */
   constructor(
     private readonly store: Store<RootState>,
     private readonly apiService: DemoItemApi,
+    private readonly demoItemHub: DemoItemHub,
   ) {}
 
   /**
@@ -33,36 +37,40 @@ export class DemoItemFacade {
     );
     if (loadState.loading || loadState.loaded) return;
 
-    this.store.dispatch(demoItemActions.load());
+    const response = await this.demoItemHub.loadDemoItems();
+    this.store.dispatch(demoItemActions.loadSuccess(response));
   };
 
   /**
    * Create a new demo item.
    * @param item The new demo item
    */
-  public create = (item: DemoItem): void => {
-    this.apiService.dispatchAction(demoItemActions.create(item)).subscribe();
+  public create = async (item: DemoItem) => {
+    const action = demoItemActions.create(item);
+    await this.demoItemHub.sendNotDispatchedToServer(action);
   };
 
   /**
    * Update an existing demo item.
    * @param item The demo item to update
    */
-  public update = (item: DemoItem): void => {
-    this.apiService.dispatchAction(demoItemActions.update(item)).subscribe();
+  public update = async (item: DemoItem) => {
+    const action = demoItemActions.update(item);
+    await this.demoItemHub.sendNotDispatchedToServer(action);
   };
 
   /**
    * Remove a demo item.
    * @param id The id of the demo item to remove
    */
-  public remove = (id: number): void => {
-    this.apiService.dispatchAction(demoItemActions.remove({ id })).subscribe();
+  public remove = async (id: number) => {
+    const action = demoItemActions.remove({ id });
+    await this.demoItemHub.sendNotDispatchedToServer(action);
   };
 
-  public duplicate = (id: number): void => {
-    const a = demoItemActions.duplicate({ id });
-    this.apiService.dispatchAction(a).subscribe();
+  public duplicate = async (id: number) => {
+    const action = demoItemActions.duplicate({ id });
+    await this.demoItemHub.sendNotDispatchedToServer(action);
   };
 
   /**

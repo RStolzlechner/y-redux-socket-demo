@@ -88,13 +88,13 @@ export class DemoItemListComponent {
    * @param $event The event that triggered the delete
    * @param id The ID of the item to delete
    */
-  protected deleteItem($event: MouseEvent, id: number) {
+  protected async deleteItem($event: MouseEvent, id: number) {
     $event.stopPropagation();
-    this.demoItemService.remove(id);
+    await this.demoItemService.remove(id);
   }
 
-  duplicateItem($event: MouseEvent, id: number) {
+  async duplicateItem($event: MouseEvent, id: number) {
     $event.stopPropagation();
-    this.demoItemService.duplicate(id);
+    await this.demoItemService.duplicate(id);
   }
 }
